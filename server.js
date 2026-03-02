@@ -7,7 +7,7 @@ app.use(express.json());
 const PORT = 3000;
 
 app.listen(PORT, () => {
-  console.log(`Server is running in https://localhost:${PORT}`);
+  console.log(`Server is running in https://localhost:3000/recipe`);
 });
 
 //sample data
@@ -19,16 +19,16 @@ const recipes = [
 ];
 
 app.get("/recipes", (req, res) => {
-  res.json(recepies);
+  res.json(recipes);
 });
 
-(app.post("/recipes"),
-  (req, res) => {
-    const newRecipe = {
-      id: recipes.length + 1,
-      cuisine: req.body.cuisine,
-      prepTime: recipes.body.prepTime,
-    };
-    books.push(newRecipe);
-    res.json({ message: "Recipe added successfully!", book: newBook });
-  });
+app.post("/recipes", (req, res) => {
+  const newRecipe = {
+    id: recipes.length + 1,
+    name: req.body.name,
+    cuisine: req.body.cuisine,
+    prepTime: req.body.prepTime,
+  };
+  recipes.push(newRecipe);
+  res.json({ message: "Recipe added successfully!", recipe: newRecipe });
+});
