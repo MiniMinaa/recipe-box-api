@@ -11,7 +11,7 @@ app.listen(PORT, () => {
 });
 
 //sample data
-const recipes = [
+let recipes = [
   // adds array with 3 objects in it
   { id: 1, name: "Swedish pancakes", cuisine: "Swedish", prepTime: "15 mins" },
   { id: 2, name: "Dolma", cuisine: "Kurdish", prepTime: "60 mins" },
@@ -31,4 +31,21 @@ app.post("/recipes", (req, res) => {
   };
   recipes.push(newRecipe);
   res.json({ message: "Recipe added successfully!", recipe: newRecipe });
+});
+
+app.put("/recipes/:id", (req, res) => {
+  const recipeId = parseInt(req.params.id);
+  const recipe = recipes.find((r) => r.id === recipeId);
+  if (!recipe) {
+    return res.status(404).json({ message: "recipe not found!" });
+  }
+  recipe.name = req.body.name || recipe.name;
+  recipe.cuisine = req.body.cuisine || recipe.cuisine;
+  res.json({ message: "Recipe updated successfully!", recipe });
+});
+
+app.delete("/recipes/:id", (req, res) => {
+  const recipeId = parseInt(req.params.id);
+  recipes = recipes.filter((r) => r.id !== recipeId);
+  res.json({ message: "Recipe deleted successfully!" });
 });
