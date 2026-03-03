@@ -21,6 +21,14 @@ let recipes = [
 app.get("/recipes", (req, res) => {
   res.json(recipes);
 });
+app.get("/recipes", (req, res) => {
+  const recipeId = parseInt(req.params.id);
+  const recipe = recipes.find((r) => r.id === recipeId);
+  if (!recipe) {
+    return res.status(404).json({ message: "Recipe not found!" });
+  }
+  res.json(recipe);
+});
 
 app.post("/recipes", (req, res) => {
   const newRecipe = {
